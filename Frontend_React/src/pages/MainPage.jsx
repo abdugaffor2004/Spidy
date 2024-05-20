@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { useState } from "react"
 import { BsDash } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 export const MainPage = () => {
     
     let [file, setFile] = useState(null)
-    let [content, setContent] = useState({startPage: '', lastPage: '', questionAmount: ''})
+    let [content, setContent] = useState({startPage: '', lastPage: '', questionAmount: '', isQuestionsWithVariants: false})
     const navigate = useNavigate()
     const formData = new FormData();
 
@@ -60,10 +59,19 @@ export const MainPage = () => {
                         <Input onChange={(e) => setContent({ ...content, startPage: e.target.value }) } placeholder='Начало' id="file" type="number" className="max-w-20 mt-2 mb-4 [&::-webkit-inner-spin-button]:appearance-none" />
                         <BsDash size={42} className="mt-2"/>
                         <Input onChange={(e) => setContent({ ...content, lastPage: e.target.value })} placeholder='Конец' id="file" type="number" className="max-w-20 mt-2 mb-4 [&::-webkit-inner-spin-button]:appearance-none" />
-
                         <Input onChange={(e) => setContent({ ...content, questionAmount: e.target.value })} placeholder='№' id="file" type="number" className="max-w-16 mt-2 mb-4 ml-5 [&::-webkit-inner-spin-button]:appearance-none" />
-
                     </div>
+
+                    <div className="flex mt-3">
+                        <input type="checkbox" onChange={(e) => setContent({...content, isQuestionsWithVariants: e.target.checked})} className="h-4 w-4 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 accent-slate-800"/>
+                        <label htmlFor="questionsType" className="text-sm ml-2 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"> Вопросы с вариантами ответов </label>
+                    </div>
+
+                    <p className="text-sm mt-2 mb-3 text-muted-foreground">
+                        Значением по умолчанию является вопрос без вариантов ответа
+                    </p>
+                    
+
                     <Button onClick={handleSubmit} type="submit">Отправить</Button>
                 </form>
             </div>
