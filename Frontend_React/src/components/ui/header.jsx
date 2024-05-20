@@ -5,9 +5,8 @@ import { Link } from "react-router-dom";
 export function Header(){
     return(
         <header>
-            <nav className="bg-orange-500 py-2 flex justify-center">
-                <Link className="bg-green-500 mx-3 px-2 py-1 rounded" to={'/NotFound'}> NotFound </Link>
-                <Link className="bg-green-500 mx-3 px-2 py-1 rounded" to={'/'}> Home </Link>
+            <nav className="py-5 pr-3 flex justify-end">
+                <Link className=" bg-slate-900 text-white mx-3 px-2 py-1 rounded" to={'/'}> Форма </Link>
             </nav>
         </header>
     )

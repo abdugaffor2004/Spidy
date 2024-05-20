@@ -1,14 +1,14 @@
 import { Routes, Route } from 'react-router-dom'
-import { NotFound } from './pages/404'
 import { MainPage } from './pages/MainPage'
+import Results from './pages/Results'
 
 function App() {
 
   return (
     <>
       <Routes>
-        <Route path='/' element={ <MainPage /> }></Route>
-        <Route path="/NotFound" element={ <NotFound /> }/>
+        <Route path="/" element={ <MainPage /> }></Route>
+        <Route path="/result" element={ <Results /> }/>
       </Routes>
     </>
   )
