@@ -4,12 +4,13 @@ from YaGPT import GPT
 import random
 import re
 import json
+import time 
 
 class QuestionGenerator:
 
     # функция генератор одиночного вопроса
     def generation(self, chunks, type_generation, question_number):
-        return result.append(GPT(chunks[question_number], type_generation))
+        return GPT(chunks[question_number], type_generation)
 
     #фуекция генератор списка вопросов
     def main_generator(self, chunks, number, type_generation):
@@ -19,22 +20,16 @@ class QuestionGenerator:
             # генерируем числа
             unique_numbers = random.sample(range(len(chunks)), number)
             for i in unique_numbers:
+                time.sleep(1)
                 result.append(GPT(chunks[i], type_generation))
         else:
             print("Для генерации " + str(number) + " недостаточно текста")
             for i in chunks:
+                time.sleep(1)
                 result.append(GPT(i, type_generation))
 
         return(result)
 
-    '''
-    def read_docx(self, file_path):# Открытие документа .dox
-        doc = Document(file_path)
-        full_text = []
-        for para in doc.paragraphs:
-            full_text.append(para.text)
-        return '\n'.join(full_text)
-    '''
     #функция для копирования текста из страниц .pdf
     def extract_text_from_pages(self, pdf_path, start_page, end_page):
         extracted_text = ""
@@ -79,37 +74,3 @@ class QuestionGenerator:
                 extracted_text += page.extract_text()
 
         return extracted_text
-'''
-question_generator = QuestionGenerator()
-file_path = 'C:/Users/p_kar/OneDrive/Рабочий стол/Папки/Python/ОПД/тест2.pdf'
-#text = question_generator.read_docx(file_path)
-start_page = 2
-end_page = 4
-text = question_generator.extract_text_from_pages(file_path, start_page, end_page)
-chunk_size = 500  # Задаем размер отрезка в словах
-chunks = question_generator.split_text_into_chunks(text, chunk_size)
-
-#генератор списка вопросов
-number = 5
-type_generation = 0
-result = question_generator.main_generator(chunks, number, type_generation)
-
-#генератор одиночного вопроса
-question_number = 0
-result2 = question_generator.generation(chunks, type_generation, question_number)
-print(result)
-
-
-text = ''
-nom = 0
-for i in result:
-  nom += 1
-  text = "№ " +str(nom)+":"
-  for n in i:
-    if n !="n":
-      text += n
-    else:
-      print(text)
-      text = ''
-  print(text)
-  '''

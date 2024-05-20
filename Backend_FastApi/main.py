@@ -27,6 +27,7 @@ async def upload_file(
     text = question_generator.extract_text_from_pages(file_location, int(start_page), int(last_page))
     tokenizd_str = question_generator.split_text_into_chunks(text, 500)
     questions = question_generator.main_generator(tokenizd_str, int(question_amount), 0)
+    
     content = {
         "startPage": questions,
         "lastPage": last_page,
