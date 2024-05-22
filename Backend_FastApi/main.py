@@ -18,8 +18,7 @@ async def upload_file(
     #filename = generate_filename(contents)
     file_location = os.path.join(UPLOAD_DIRECTORY, file.filename)
     with open(file_location, "wb") as f:
-            
-            f.write(await file.read())
+        f.write(await file.read())
 
 
     question_generator = QuestionGenerator()
