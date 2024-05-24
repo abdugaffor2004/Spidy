@@ -1,6 +1,6 @@
 from fastapi import FastAPI, File, Form, UploadFile
 from fastapi.responses import JSONResponse
-# from question_generator import QuestionGenerator
+from question_generator import QuestionGenerator
 from fastapi.middleware.cors import CORSMiddleware
 import os
 
@@ -24,25 +24,26 @@ async def upload_file(
     file: UploadFile = File(...),
     startPage: str = Form(...),
     lastPage: str = Form(...),
-    questionAmount: str = Form(...)
+    questionAmount: str = Form(...),
+    isQuestionsWithVariants: bool = Form(...)
 ):
     # #filename = generate_filename(contents)
-    # file_location = os.path.join(UPLOAD_DIRECTORY, file.filename)
-    # with open(file_location, "wb") as f:
-    #     f.write(await file.read())
+    file_location = os.path.join(UPLOAD_DIRECTORY, file.filename)
+    with open(file_location, "wb") as f:
+        f.write(await file.read())
 
 
-    # question_generator = QuestionGenerator()
+    question_generator = QuestionGenerator()
     
-    # text = question_generator.extract_text_from_pages(file_location, int(start_page), int(last_page))
-    # tokenizd_str = question_generator.split_text_into_chunks(text, 500)
-    # questions = question_generator.main_generator(tokenizd_str, int(question_amount), 0)
+    text = question_generator.extract_text_from_pages(file_location, int(startPage), int(lastPage))
+    tokenizd_str = question_generator.split_text_into_chunks(text, 500)
+    questions = question_generator.main_generator(tokenizd_str, int(questionAmount), int(isQuestionsWithVariants))
     
     content = {
         "startPage": startPage,
         "lastPage": lastPage,
         "questionAmount": questionAmount,
-        "fileName": file.filename
+        "questions": questions
     }
 
     return JSONResponse(content)

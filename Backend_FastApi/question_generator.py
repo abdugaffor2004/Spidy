@@ -2,7 +2,6 @@
 import PyPDF2
 from YaGPT import GPT
 import random
-import re
 import json
 import time 
 
