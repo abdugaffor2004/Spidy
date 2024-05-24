@@ -1,7 +1,9 @@
+import { getQuestions } from "@/api/api";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { BsDash } from "react-icons/bs";
+import { useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 
 export const MainPage = () => {
@@ -11,7 +13,10 @@ export const MainPage = () => {
     const navigate = useNavigate()
     const formData = new FormData();
 
-    function handleSetFile(event) {
+    let {isLoading, isError, data, error, status , refetch, isSuccess} = useQuery(['questions', formData], () => getQuestions(formData), {enabled: false})
+    let queryClient = useQueryClient()
+
+    async function handleSetFile(event) {
         const files = event.target.files;
 
         if (files?.length) {
@@ -19,7 +24,7 @@ export const MainPage = () => {
         }
     }
 
-    function handleSubmit(e){
+    async function handleSubmit(e){
         e.preventDefault()
         console.log(file);
         console.log(content)
@@ -30,24 +35,30 @@ export const MainPage = () => {
 
         formData.append("file", file);
         Object.keys(content).forEach( (key) => formData.append(key, content[key]) );
-        navigate("/result")
         
+        refetch()
+
     }
+    
+    useEffect(() => {
+        if (status === "success") {
+            navigate("/result", {state: data});
+            queryClient.clear() // Сброс статуса react-query
+        }
+    }, [status, navigate]);
+     // без useEffect будет ошибка: Cannot update a component (`BrowserRouter`) while rendering a different component (`MainPage`). To locate the bad setState() call inside `MainPage`, follow the stack trace as described
+
+
+    if (isLoading) {
+        return (<h1>Loading...</h1>)
+    }
+
+
+
+    console.log(data)   
 
     return(
         <div className="flex h-screen">
-            `{/* <div className="w-2/3 flex flex-col items-center mt-10">
-                <form className="grid  max-w-xs">
-                    
-                    <Label htmlFor="file">Нажмите сюда </Label>
-                    <Input onChange={handleSetFile} accept=".pdf, .docx" id="file" type="file" className="max-w-72 mt-2 mb-4" />
-                    <Button onClick={handleSubmit} type="submit">Отправить</Button>
-                </form>
-            </div>
-
-
-            <div className="w-1/3 bg-green-600"></div> */}`
-
 
             <div className="w-full flex flex-col items-center mt-10">
                 <form className="grid max-w-xs">
