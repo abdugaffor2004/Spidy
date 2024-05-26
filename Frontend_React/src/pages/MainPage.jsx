@@ -1,6 +1,7 @@
 import { getQuestions } from "@/api/api";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import Loader from "@/components/ui/loader";
 import { useEffect, useState } from "react"
 import { BsDash } from "react-icons/bs";
 import { useQuery, useQueryClient } from "react-query";
@@ -50,7 +51,7 @@ export const MainPage = () => {
 
 
     if (isLoading) {
-        return (<h1>Loading...</h1>)
+        return <Loader />
     }
 
 

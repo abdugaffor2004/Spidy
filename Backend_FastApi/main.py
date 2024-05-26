@@ -27,7 +27,7 @@ async def upload_file(
     questionAmount: str = Form(...),
     isQuestionsWithVariants: bool = Form(...)
 ):
-    # #filename = generate_filename(contents)
+
     file_location = os.path.join(UPLOAD_DIRECTORY, file.filename)
     with open(file_location, "wb") as f:
         f.write(await file.read())
