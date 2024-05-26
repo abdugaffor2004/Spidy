@@ -4,7 +4,7 @@ from YaGPT import GPT
 import random
 import json
 import time 
-
+import re
 class QuestionGenerator:
 
     # функция генератор одиночного вопроса
@@ -50,9 +50,15 @@ class QuestionGenerator:
         json_str_no_newlines = json.dumps(result, separators=(',', ':'))
         return json.loads(json_str_no_newlines)
 
-    def split_text_into_chunks(self, text, chunk_size):# Разбиение текста по n словам
-        words = text.split()
-        chunks = [' '.join(words[i:i + chunk_size]) for i in range(0, len(words), chunk_size)]
+    def split_text_into_chunks(self, text, chunk_size, numb):# Разбиение текста по n словам
+        while True:
+            words = text.split()
+            chunks = [' '.join(words[i:i + chunk_size]) for i in range(0, len(words), chunk_size)]
+            if len(chunks) < numb:
+                hunk_size -= 100
+                chunks = [' '.join(words[i:i + chunk_size]) for i in range(0, len(words), chunk_size)]
+            else:
+                break
         return chunks
 
     #функция для копирования текста из страниц .pdf
@@ -71,5 +77,28 @@ class QuestionGenerator:
             for page_num in range(start_page, end_page + 1):
                 page = reader.pages[page_num]
                 extracted_text += page.extract_text()
-
         return extracted_text
+    
+    #поиск всех подстрок между ':' и '?'
+    def extract_between_colon_and_question(self, text):  
+        pattern = r':(.*?)\?'
+        matches = re.findall(pattern, text)
+        return matches
+    # Находим текст после ':'
+    def extract_after_colon(self, text):
+        colon_index = text.find(':')
+        if colon_index != -1:
+            return text[colon_index + 1:].strip()
+        else:
+            return "Error"
+    
+    def remove_before_question_mark(self, text):
+    
+        question_index = text.find('?')
+        
+        
+        if question_index != -1:
+            return text[question_index:]
+        else:
+            
+            return text

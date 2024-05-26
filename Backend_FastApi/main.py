@@ -1,6 +1,7 @@
 from fastapi import FastAPI, File, Form, UploadFile
 from fastapi.responses import JSONResponse
 from question_generator import QuestionGenerator
+
 from fastapi.middleware.cors import CORSMiddleware
 import os
 
@@ -27,23 +28,37 @@ async def upload_file(
     questionAmount: str = Form(...),
     isQuestionsWithVariants: bool = Form(...)
 ):
-
+    
     file_location = os.path.join(UPLOAD_DIRECTORY, file.filename)
     with open(file_location, "wb") as f:
         f.write(await file.read())
 
 
     question_generator = QuestionGenerator()
-    
+
     text = question_generator.extract_text_from_pages(file_location, int(startPage), int(lastPage))
-    tokenizd_str = question_generator.split_text_into_chunks(text, 500)
+    tokenizd_str = question_generator.split_text_into_chunks(text, 500,int(questionAmount))
     questions = question_generator.main_generator(tokenizd_str, int(questionAmount), int(isQuestionsWithVariants))
-    
+  
+    mas = []
+ 
+    for i in questions:
+        result1 = question_generator.extract_between_colon_and_question(i)
+        result1 = str(result1).replace("Вопрос:", "")
+        result1 = result1.replace("[", "")
+        result1 = result1.replace("]", "")
+
+        line = question_generator.remove_before_question_mark(i)
+        line = line.replace("Ответ:", "")
+        line = line.replace("?", "")
+        mas.append({'question' : result1 , 'answer' : line})
+
+
     content = {
         "startPage": startPage,
         "lastPage": lastPage,
         "questionAmount": questionAmount,
-        "questions": questions
+        "questions": mas
     }
 
     return JSONResponse(content)

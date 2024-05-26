@@ -2,14 +2,14 @@ import requests
 # Яндекс GPT
 def GPT(input_str, type):
   if type == 0:
-    text = "Составь из этого текста только один вопрос для теста и только один развёрнутый ответ на него: " + str(input_str)
+    text = "Составь из этого текста только один вопрос для теста и только один развёрнутый ответ на него, вопрос и ответы раздели словом ответ: " + str(input_str)
   else:
-    text = "Составь из этого текста только один вопрос для теста и несколько вариантов ответа на него: " + str(input_str)
+    text = "Составь из этого текста только один вопрос для теста и несколько вариантов ответа на него, вопрос и ответы раздели словом ответ: " + str(input_str)
   prompt = {
       "modelUri": "gpt://b1g1o9j4lup4tvhfe5u6/yandexgpt-lite",
       "completionOptions": {
           "stream": False,
-          "temperature": 0.6,
+          "temperature": 0.4,
           "maxTokens": "8000"
       },
       "messages": [
