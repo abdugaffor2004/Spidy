@@ -6,7 +6,7 @@ def GPT(input_str, type):
   else:
     text = "Составь из этого текста только один вопрос для теста и несколько вариантов ответа на него, вопрос и ответы раздели словом ответ:" + str(input_str)
   prompt = {
-      "modelUri": "gpt://b1g1o9j4lup4tvhfe5u6/yandexgpt-lite",
+      "modelUri": "gpt://b1gj7iqv7t9soraq482h/yandexgpt-lite",
       "completionOptions": {
           "stream": False,
           "temperature": 0.4,
