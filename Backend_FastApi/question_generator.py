@@ -5,6 +5,12 @@ import random
 import json
 import time 
 import re
+import os
+
+
+import docx2pdf
+import fitz  # PyMuPDF
+
 class QuestionGenerator:
 
     # функция генератор одиночного вопроса
@@ -102,4 +108,19 @@ class QuestionGenerator:
         else:
             
             return text
-    
+    # Проверка расширения файла и конвертация .pdf в .docx
+    def check_file_format(self, file_path):
+        new_file = None
+        # Получить расширение файла
+        file_extension = os.path.splitext(file_path)[1]
+
+        if file_extension == ".docx":
+            # Преобразуем документ Word в PDF
+            pdf_file = file_path.replace(".docx", ".pdf")
+            docx2pdf.convert(file_path, pdf_file)
+            return(pdf_file)
+        elif file_extension == ".pdf":
+            return(file_path)
+            #new_file = file_path
+            
+

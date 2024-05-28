@@ -35,8 +35,8 @@ async def upload_file(
 
 
     question_generator = QuestionGenerator()
-
-    text = question_generator.extract_text_from_pages(file_location, int(startPage), int(lastPage))
+    file = question_generator.check_file_format(file_location)
+    text = question_generator.extract_text_from_pages(file, int(startPage), int(lastPage))
     tokenizd_str = question_generator.split_text_into_chunks(text, 500,int(questionAmount))
     questions = question_generator.main_generator(tokenizd_str, int(questionAmount), int(isQuestionsWithVariants))
     print( questions )
@@ -49,7 +49,7 @@ async def upload_file(
         result1 = str(result1).replace("Вопрос:", "")
         result1 = result1.replace("[", "")
         result1 = result1.replace("]", "")
-
+        result1 = result1.replace("'", "")
         line = question_generator.remove_before_question_mark(i)
         line = line.replace("Ответ:", "")
         line = line.replace("?", "")
@@ -63,6 +63,7 @@ async def upload_file(
         "startPage": startPage,
         "lastPage": lastPage,
         "questionAmount": questionAmount,
+        "isQuestionsWithVariants": isQuestionsWithVariants,
         "questions": mas
     }
 
