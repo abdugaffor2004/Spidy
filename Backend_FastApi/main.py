@@ -75,7 +75,7 @@ async def upload_file(
             line = line.replace("Ответ:", "")
             line = line.replace("?", "")
             
-            mas.append({'question' : result1 , 'answer' : line, 'correct_answer' : line1})
+            mas.append({'question' : result1 , 'answer_variants' : line, 'answer' : line1})
 
   
     

@@ -9,7 +9,6 @@ import os
 
 
 import docx2pdf
-import fitz  # PyMuPDF
 
 class QuestionGenerator:
 
@@ -127,7 +126,7 @@ class QuestionGenerator:
             return(pdf_file)
         elif file_extension == ".pdf":
             return(file_path)
-            #new_file = file_path
+            
 
             
 
