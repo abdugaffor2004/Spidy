@@ -42,20 +42,41 @@ async def upload_file(
     print( questions )
     mas = []
 
+    if int(isQuestionsWithVariants) ==0:
+        for i in questions:
+            result1 = question_generator.extract_between_colon_and_question(i)
 
-    for i in questions:
-        result1 = question_generator.extract_between_colon_and_question(i)
+            result1 = str(result1).replace("Вопрос:", "")
+            result1 = result1.replace("[", "")
+            result1 = result1.replace("]", "")
+            result1 = result1.replace("'", "")
 
-        result1 = str(result1).replace("Вопрос:", "")
-        result1 = result1.replace("[", "")
-        result1 = result1.replace("]", "")
-        result1 = result1.replace("'", "")
-        line = question_generator.remove_before_question_mark(i)
-        line = line.replace("Ответ:", "")
-        line = line.replace("?", "")
-        mas.append({'question' : result1 , 'answer' : line})
+            line = question_generator.remove_before_question_mark(i)
+            line = line.replace("Ответ:", "")
+            line = line.replace("?", "")
+            
+            mas.append({'question' : result1 , 'answer' : line})
 
-    
+    else:
+        for i in questions:
+            result1 = question_generator.extract_between_colon_and_question(i)
+
+            result1 = str(result1).replace("Вопрос:", "")
+            result1 = result1.replace("[", "")
+            result1 = result1.replace("]", "")
+            result1 = result1.replace("'", "")
+
+            line1 = question_generator.extract_after_colon_PP(i)
+            line1 = line1.replace("[", "")
+            line1 = line1.replace("]", "")
+            line1 = line1.replace("'", "")
+            i = i.replace(line1, "")
+            line = question_generator.remove_before_question_mark(i)
+            line = line.replace("Ответ:", "")
+            line = line.replace("?", "")
+            
+            mas.append({'question' : result1 , 'answer' : line, 'correct_answer' : line1})
+
   
     
 

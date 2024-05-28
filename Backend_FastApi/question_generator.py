@@ -25,7 +25,7 @@ class QuestionGenerator:
             # генерируем числа
             unique_numbers = random.sample(range(len(chunks)), number)
             for i in unique_numbers:
-                time.sleep(1)
+                time.sleep(2)
                 result.append(GPT(chunks[i], type_generation))
         else:
             print("Для генерации " + str(number) + " недостаточно текста")
@@ -97,7 +97,13 @@ class QuestionGenerator:
             return text[colon_index + 1:].strip()
         else:
             return "Error"
-    
+    # Находим текст после 'Правильный ответ:'
+    def extract_after_colon_PP(self, text):
+        colon_index = text.find('Правильный ответ:')
+        if colon_index != -1:
+            return "П" + text[colon_index + 1:].strip()
+        else:
+            return "Error"
     def remove_before_question_mark(self, text):
     
         question_index = text.find('?')
@@ -122,5 +128,6 @@ class QuestionGenerator:
         elif file_extension == ".pdf":
             return(file_path)
             #new_file = file_path
+
             
 
