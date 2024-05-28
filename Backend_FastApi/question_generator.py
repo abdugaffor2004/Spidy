@@ -30,7 +30,7 @@ class QuestionGenerator:
         else:
             print("Для генерации " + str(number) + " недостаточно текста")
             for i in chunks:
-                time.sleep(1)
+                time.sleep(2)
                 result.append(GPT(i, type_generation))
 
         return(result)
@@ -99,9 +99,9 @@ class QuestionGenerator:
             return "Error"
     # Находим текст после 'Правильный ответ:'
     def extract_after_colon_PP(self, text):
-        colon_index = text.find('Правильный ответ:')
+        colon_index = text.find(' ответ:')
         if colon_index != -1:
-            return "П" + text[colon_index + 1:].strip()
+            return "Правильный " + text[colon_index + 1:].strip()
         else:
             return "Error"
     def remove_before_question_mark(self, text):
