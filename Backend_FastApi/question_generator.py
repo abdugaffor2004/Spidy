@@ -55,7 +55,7 @@ class QuestionGenerator:
             words = text.split()
             chunks = [' '.join(words[i:i + chunk_size]) for i in range(0, len(words), chunk_size)]
             if len(chunks) < numb:
-                hunk_size -= 100
+                chunk_size -= 100
                 chunks = [' '.join(words[i:i + chunk_size]) for i in range(0, len(words), chunk_size)]
             else:
                 break
@@ -102,3 +102,4 @@ class QuestionGenerator:
         else:
             
             return text
+    

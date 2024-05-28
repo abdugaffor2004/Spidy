@@ -39,11 +39,13 @@ async def upload_file(
     text = question_generator.extract_text_from_pages(file_location, int(startPage), int(lastPage))
     tokenizd_str = question_generator.split_text_into_chunks(text, 500,int(questionAmount))
     questions = question_generator.main_generator(tokenizd_str, int(questionAmount), int(isQuestionsWithVariants))
-  
+    print( questions )
     mas = []
- 
+
+
     for i in questions:
         result1 = question_generator.extract_between_colon_and_question(i)
+
         result1 = str(result1).replace("Вопрос:", "")
         result1 = result1.replace("[", "")
         result1 = result1.replace("]", "")
@@ -53,6 +55,9 @@ async def upload_file(
         line = line.replace("?", "")
         mas.append({'question' : result1 , 'answer' : line})
 
+    
+  
+    
 
     content = {
         "startPage": startPage,
