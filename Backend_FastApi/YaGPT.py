@@ -23,7 +23,7 @@ def GPT(input_str, type):
   url = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"
   headers = {
       "Content-Type": "application/json",
-      "Authorization": "Api-Key AQVN36QRntV3Gys6tAvWaL1nEZeEYkCkW2hsYdqV"
+      "Authorization": "Api-Key AQVNynZCXtaHNZGOL1nWAY4tLu3bVyYunasWwSI0"
   }
 
   response = requests.post(url, headers=headers, json=prompt)
