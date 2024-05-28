@@ -1,17 +1,35 @@
 import { Header } from '@/components/ui/header'
-import React from 'react'
-import { useLocation } from 'react-router-dom'
+import QuestionCard from '@/components/ui/questionCard';
+import React, { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 function Results() {
 
-const {state} = useLocation()
+// const {state} = useLocation()
+const navigate = useNavigate();
 
-  console.log(state)
+const state = true
+
+  useEffect( () =>{
+    if(!state){
+      navigate('/')
+    }
+
+  }, [state] )
+
+  if (!state) {
+    return null
+  }
 
   return (
-    <div>
+    <div className='no-scrollbar h-screen overflow-y-scroll'>  {/* Избавляеися от скроллбара. no-scrollbar добавил в tailwind.config -> plugins (это не встроенное свойство) */}
       <Header />
-      {state.fileName}
+      <div className='py-10 flex flex-col items-center '>
+        <QuestionCard isQuestionWithVariants={true} />
+        <QuestionCard />
+        <QuestionCard />
+        <QuestionCard />
+      </div>
     </div>
   )
 }
